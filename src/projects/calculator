@@ -1,0 +1,79 @@
+//import section
+import './App.css';
+import {useState, useEffect} from "react"
+
+
+function App() {
+  // Vanilla Jsx Section
+  const [amount, setAmount] = useState(1000)
+  const [interest, SetInterest] = useState (0)
+  const [termInYears, setTermInYears] = useState (0)
+  const  [loanMonthlyPayment, setLoanMonthlyPayment ] = useState (0)
+
+  function calculateLoanMonthlyPayment(amount,interestTerm,termInYears){
+    if (amount <= 0 || interest <= 0 || termInYears <= 0) {
+      return "Invalid input";
+    }
+  const interestRateInYearsNotAsPercentage = interest / 100;
+  const interestRateInMonths = interestRateInYearsNotAsPercentage / 12;
+  const termInMonths = termInYears * 12;
+  const numerator =
+    amount * interestRateInMonths * Math.pow(1 + interestRateInMonths, termInMonths);
+
+  const denominator = Math.pow(1 + interestRateInMonths, termInMonths) - 1;
+  if (denominator === 0) {
+    return "Divide by zero error";
+  }
+  const monthlyPayment = numerator / denominator;
+  return monthlyPayment.toFixed(2);
+  }
+
+
+  //useEffect
+  useEffect(() => {
+    let monthlyPayment = calculateLoanMonthlyPayment(amount,interest,termInYears)
+    setLoanMonthlyPayment (monthlyPayment)
+  }, [amount,interest,termInYears]); 
+
+  return (
+    <div >
+      <form>
+        <div>
+          <label>
+            <div>
+              Amount
+            </div>
+            <input value = {amount} unChange = {e => setAmount(e.target.valueAsNumber)} type = "number" />
+          </label>
+        </div>
+        <div>
+          <label>
+            <div>
+              Interest
+            </div>
+            <input unChange = {e => SetInterest(e.target.valueAsNumber)} type = "number" />
+          </label>
+        </div>
+        <div>
+          <label>
+            <div>
+              Term
+            </div>
+            <input unChange = {e => setTermInYears(e.target.valueAsNumber)} type = "number" />
+          </label>
+        </div>
+      </form>
+      <div>
+        <div>
+          Monthly Payment
+        </div>
+        <div>
+          {loanMonthlyPayment}
+        </div>
+      </div>
+     
+    </div>
+  );
+}
+
+export default App;

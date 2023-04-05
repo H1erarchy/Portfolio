@@ -3,7 +3,7 @@ import React from 'react'
 import Hero from './components/Hero'
 import About from './components/About'
 import Contact from './components/Contact'
-import Calculator from './Projects/Calculator';
+//import Calculator from './Projects/Calculator';
 import NotFound from './components/NotFound';
 import { Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home'
